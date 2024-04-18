@@ -90,12 +90,6 @@ constexpr bool has_prefetch = false;
 template <class CopyOp>
 constexpr bool has_prefetch<CopyOp, void_t<typename CopyOp::PREFETCH>> = true;
 
-template <class CopyOp, class = void>
-constexpr bool is_prefetch = false;
-
-template <class CopyOp>
-constexpr bool is_prefetch<CopyOp, void_t<typename CopyOp::PREFETCH>> = is_same_v<CopyOp, typename CopyOp::PREFETCH>;
-
 } // end namespace detail
 
 template <class CopyOp, class... CT_Args, class... CA_Args,

@@ -145,4 +145,17 @@ copy_unpack(Copy_Traits<CopyOp,Args...> const& traits,
   copy_unpack(traits, src, dst);
 }
 
+namespace detail {
+
+// NOTE: To avoid this pre-definition work-around, a proper copy_unpack for a CopyAtom::PREFETCH  // {$nv-internal-release}
+//       should be defined rather than branching within an existing copy_unpack.                  // {$nv-internal-release}
+template <class CopyOp, class = void>
+constexpr bool is_prefetch = false;
+
+template <class CopyOp>
+constexpr bool is_prefetch<CopyOp, void_t<typename CopyOp::PREFETCH>> = is_same_v<CopyOp, typename CopyOp::PREFETCH>;
+
+} // end namespace detail
+
+
 } // end namespace cute
